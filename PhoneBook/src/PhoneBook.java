@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class PhoneBook {
 	
-	private String DATA_PATH = "PhoneBook/src/contacts.csv";
+	private String DATA_PATH = "src/contacts.csv";
 	
 	public PhoneBook(String filepath) {
 		if(!filepath.isEmpty())

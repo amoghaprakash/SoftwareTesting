@@ -1,5 +1,3 @@
-import static org.junit.Assert.assertEquals;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -9,7 +7,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 public class PhoneBookTest {
+	PhoneBook p;
 
 	private static final String EOL = System.getProperty("line.separator");
 	private PrintStream consoleOut;
@@ -18,9 +19,19 @@ public class PhoneBookTest {
 	private ByteArrayInputStream bytesIn;
 	private String outputStart = "";
 	private String outputEnd = "";
+	private String showContactStart = "";
+	private String showContactError = "";
+	private String findContactStart = "";
+	private String findContactPrompt = "";
+	private String findContactError = "";
+	private String addContactStart = "";
+	private String addContactPrompt = "";
+	private String addContactError = "";
+	private String appTerminate = "";
 
 	@Before
 	public void setUp() {
+		p = new PhoneBook("tst/contacts.csv");
 		bytesOut = new ByteArrayOutputStream();
 		consoleOut = System.out;
 		System.setOut(new PrintStream(bytesOut));
@@ -36,8 +47,24 @@ public class PhoneBookTest {
 				+ "delete - removes a contact from the phone book" + EOL 
 				+ "help - lists all valid commands" + EOL 
 				+ "---------------------------" + EOL + "> ";
+
+		showContactStart = "Enter the name you are looking for:";
+		showContactError = "Sorry, nothing found!";
+		findContactStart = "Enter a number to see to whom does it belong:";
+		findContactPrompt = "Enter number:";
+		findContactError = "Invalid number! May contain only digits, spaces and '+'. Min length 3, max length 25.";
+		addContactStart = "You are about to add a new contact to the phone book.";
+		addContactPrompt = "Enter contact name:";
+		addContactError = "Name must be in range 2 - 50 symbols.";
+		appTerminate = "'Phone Book 0.2' terminated.";
+
 		
 		outputEnd = EOL + "Type a command or 'exit' to quit. For a list of valid commands use 'help':" + EOL;
+	}
+
+	private void provideInput(String data) {
+		bytesIn = new ByteArrayInputStream(data.getBytes());
+		System.setIn(bytesIn);
 	}
 
 	@After
@@ -51,21 +78,25 @@ public class PhoneBookTest {
 		bytesIn = new ByteArrayInputStream("exit".getBytes());
 		System.setIn(bytesIn);
 		PhoneBook.main("tst/contactsEmpty.csv");
-		assertEquals(outputStart + "'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+		assertEquals(outputStart + appTerminate + EOL, bytesOut.toString());
 	}
 	@Test
 	public void testListContacts() {
 		bytesIn = new ByteArrayInputStream(("list"+ EOL + "exit").getBytes());
 		System.setIn(bytesIn);
-		PhoneBook.main("tst/contacts.csv");
-		assertEquals(outputStart + "Marin" + EOL 
+		PhoneBook.main("PhoneBook/tst/contacts.csv");
+		assertEquals(outputStart + "Heetae" + EOL
+				+ "2061234567" + EOL
+				+ "1234567890" + EOL
+				+ EOL
+				+ "Marin" + EOL
 				+ "0887174411" + EOL
 				+ "+359882379597" + EOL
 				+ EOL
 				+ "Plamena" + EOL
 				+ "0883 456 789" + EOL
 				+ EOL + outputEnd + EOL
-				+ "> 'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+				+ "> " + appTerminate + EOL, bytesOut.toString());
 	}
 	@Test
 	public void testEmptyListContacts() {
@@ -74,6 +105,20 @@ public class PhoneBookTest {
 		PhoneBook.main("tst/contactsEmpty.csv");
 		assertEquals(outputStart + "No records found, the phone book is empty!" + EOL 
 			    + outputEnd + EOL
-				+ "> 'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+				+ "> " + appTerminate + EOL, bytesOut.toString());
+	}
+
+	@Test
+	public void testFindContacts() {
+		bytesIn = new ByteArrayInputStream(("find"+ EOL + "2061234567" + EOL + "exit").getBytes());
+		System.setIn(bytesIn);
+		PhoneBook.main("/tst/contacts.csv");
+		assertEquals(outputStart + findContactStart
+				+ EOL
+				+ "2061234567"
+				+ EOL
+				+ "Heetae"
+				+ EOL
+				+ outputEnd + EOL, bytesOut.toString());
 	}
 }

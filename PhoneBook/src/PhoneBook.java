@@ -12,7 +12,7 @@ public class PhoneBook {
 			this.DATA_PATH = filepath;
 	}
 
-    public void saveContacts(Map<String, List<String>> contacts) {
+    private void saveContacts(Map<String, List<String>> contacts) {
         try (PrintWriter writer = new PrintWriter(DATA_PATH)) {
             if (!contacts.isEmpty()) {
                 for (Map.Entry<String, List<String>> entry : contacts.entrySet()) {
@@ -27,7 +27,7 @@ public class PhoneBook {
         }
     }
 
-    public void loadContacts(Map<String, List<String>> contacts) {
+    private void loadContacts(Map<String, List<String>> contacts) {
         try (BufferedReader reader = new BufferedReader(new FileReader(DATA_PATH))) {
 
             Pattern pattern = Pattern.compile("^([^,\"]{2,50}),\"([0-9+, ]+)\"$");
@@ -50,7 +50,7 @@ public class PhoneBook {
         }
     }
 
-    public void listCommands() {
+    private void listCommands() {
         System.out.println("list - lists all saved contacts in alphabetical  order");
         System.out.println("show - finds a contact by name");
         System.out.println("find - searches for a contact by number");
@@ -61,7 +61,7 @@ public class PhoneBook {
         System.out.println("---------------------------");
     }
 
-    public void listContacts(Map<String, List<String>> contacts) {
+    private void listContacts(Map<String, List<String>> contacts) {
         if (!contacts.isEmpty()) {
             for (Map.Entry<String, List<String>> entry : contacts.entrySet()) {
                 System.out.println(entry.getKey());
@@ -78,7 +78,7 @@ public class PhoneBook {
         System.out.println("Type a command or 'exit' to quit. For a list of valid commands use 'help':");
     }
 
-    public void showContact(Map<String, List<String>> contacts, Scanner input) {
+    private void showContact(Map<String, List<String>> contacts, Scanner input) {
         System.out.println("Enter the name you are looking for:");
         String name = input.nextLine().trim();
 
@@ -95,7 +95,7 @@ public class PhoneBook {
         System.out.println("Type a command or 'exit' to quit. For a list of valid commands use 'help':");
     }
 
-    public void findContact(Map<String, List<String>> contacts, Scanner input) {
+    private void findContact(Map<String, List<String>> contacts, Scanner input) {
         System.out.println("Enter a number to see to whom does it belong:");
         String number = input.nextLine().trim();
 
@@ -116,7 +116,7 @@ public class PhoneBook {
         System.out.println("Type a command or 'exit' to quit. For a list of valid commands use 'help':");
     }
 
-    public void addContact(Map<String, List<String>> contacts, Scanner input) {
+    private void addContact(Map<String, List<String>> contacts, Scanner input) {
         System.out.println("You are about to add a new contact to the phone book.");
         String name;
         String number;
@@ -164,7 +164,7 @@ public class PhoneBook {
         System.out.println("Type a command or 'exit' to quit. For a list of valid commands use 'help':");
     }
 
-    public void editContact(Map<String, List<String>> contacts, Scanner input) {
+    private void editContact(Map<String, List<String>> contacts, Scanner input) {
         System.out.println("Enter name of the contact you would like to modify:");
         String name = input.nextLine().trim();
 
@@ -241,7 +241,7 @@ public class PhoneBook {
         System.out.println("Type a command or 'exit' to quit. For a list of valid commands use 'help':");
     }
 
-    public void deleteContact(Map<String, List<String>> contacts, Scanner input) {
+    private void deleteContact(Map<String, List<String>> contacts, Scanner input) {
         System.out.println("Enter name of the contact to be deleted:");
         String name = input.nextLine().trim();
 

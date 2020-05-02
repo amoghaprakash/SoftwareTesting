@@ -44,6 +44,19 @@ public class PhoneBookTest {
 	private static final String SHOW_COMMAND = "show";
 	private static final String FIND_COMMAND = "find";
 
+	//String Constants
+	private static final String SHOW_CONTACT_START = "Enter the name you are looking for:";
+	private static final String SHOW_CONTACT_ERROR = "Sorry, nothing found!";
+	private static final String FIND_CONTACT_START = "Enter a number to see to whom does it belong:";
+	private static final String FIND_CONTACT_PROMPT = "Enter number:";
+	private static final String FIND_CONTACT_ERROR = "Invalid number! May contain only digits, spaces and '+'. Min length 3, max length 25.";
+	private static final String ADD_CONTACT_START = "You are about to add a new contact to the phone book.";
+	private static final String ADD_CONTACT_PROMPT = "Enter contact name:";
+	private static final String ADD_CONTACT_ERROR = "Name must be in range 2 - 50 symbols.";
+	private static final String APP_TERMINATE = "'Phone Book 0.2' terminated.";
+	private static final String LOAD_CONTACT_ERROR = "Could not load contacts, phone book is empty!";
+	private static final String LIST_CONTACT_ERROR = "No records found, the phone book is empty!";
+	
 	@Before
 	public void setUp() {
 		bytesOut = new ByteArrayOutputStream();
@@ -67,7 +80,7 @@ public class PhoneBookTest {
 		bytesIn = new ByteArrayInputStream(EXIT_COMMAND.getBytes());
 		System.setIn(bytesIn);
 		PhoneBook.main(VALID_PHONEBOOK);
-		assertEquals(OUTPUT_START + "'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+		assertEquals(OUTPUT_START + APP_TERMINATE + EOL, bytesOut.toString());
 	}
 
 	@Test
@@ -75,8 +88,8 @@ public class PhoneBookTest {
 		bytesIn = new ByteArrayInputStream(EXIT_COMMAND.getBytes());
 		System.setIn(bytesIn);
 		PhoneBook.main(MISSING_PHONEBOOK);
-		assertEquals(OUTPUT_START + "'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
-		assertEquals("Could not load contacts, phone book is empty!" + EOL, bytesErr.toString());
+		assertEquals(OUTPUT_START + APP_TERMINATE + EOL, bytesOut.toString());
+		assertEquals(LOAD_CONTACT_ERROR + EOL, bytesErr.toString());
 	}
 
 	@Test
@@ -91,7 +104,7 @@ public class PhoneBookTest {
 				+ "Plamena" + EOL
 				+ "0883 456 789" + EOL
 				+ EOL + OUTPUT_END + EOL
-				+ "> 'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
 
 	@Test
@@ -99,9 +112,9 @@ public class PhoneBookTest {
 		bytesIn = new ByteArrayInputStream((LIST_COMMAND + EOL + EXIT_COMMAND).getBytes());
 		System.setIn(bytesIn);
 		PhoneBook.main(EMPTY_PHONEBOOK);
-		assertEquals(OUTPUT_START + "No records found, the phone book is empty!" + EOL 
+		assertEquals(OUTPUT_START + LIST_CONTACT_ERROR + EOL 
 			    + OUTPUT_END + EOL
-				+ "> 'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
 
 	@Test
@@ -109,12 +122,12 @@ public class PhoneBookTest {
 		bytesIn = new ByteArrayInputStream((SHOW_COMMAND + EOL + "Marin" + EOL + EXIT_COMMAND).getBytes());
 		System.setIn(bytesIn);
 		PhoneBook.main(VALID_PHONEBOOK);
-		assertEquals(OUTPUT_START + "Enter the name you are looking for:" + EOL 
+		assertEquals(OUTPUT_START + SHOW_CONTACT_START + EOL 
 				+ "Marin" + EOL 
 				+ "0887174411" + EOL
 				+ "+359882379597" + EOL
 			    + OUTPUT_END + EOL
-				+ "> 'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
 
 	@Test
@@ -122,10 +135,10 @@ public class PhoneBookTest {
 		bytesIn = new ByteArrayInputStream((SHOW_COMMAND + EOL + "Marin_1" + EOL + EXIT_COMMAND).getBytes());
 		System.setIn(bytesIn);
 		PhoneBook.main(VALID_PHONEBOOK);
-		assertEquals(OUTPUT_START + "Enter the name you are looking for:" + EOL 
-				+ "Sorry, nothing found!" + EOL 
+		assertEquals(OUTPUT_START + SHOW_CONTACT_START + EOL 
+				+ SHOW_CONTACT_ERROR + EOL 
 			    + OUTPUT_END + EOL
-				+ "> 'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
 
 	@Test
@@ -133,11 +146,11 @@ public class PhoneBookTest {
 		bytesIn = new ByteArrayInputStream((FIND_COMMAND + EOL + "0887174411" + EOL + EXIT_COMMAND).getBytes());
 		System.setIn(bytesIn);
 		PhoneBook.main(VALID_PHONEBOOK);
-		assertEquals(OUTPUT_START + "Enter a number to see to whom does it belong:" + EOL 
+		assertEquals(OUTPUT_START + FIND_CONTACT_START + EOL 
 				+ "Marin" + EOL 
 				+ "0887174411" + EOL
 			    + OUTPUT_END + EOL
-				+ "> 'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
 
 	@Test
@@ -145,13 +158,13 @@ public class PhoneBookTest {
 		bytesIn = new ByteArrayInputStream((FIND_COMMAND + EOL + "-1." + EOL + "0887174411" + EOL + EXIT_COMMAND).getBytes());
 		System.setIn(bytesIn);
 		PhoneBook.main(VALID_PHONEBOOK);
-		assertEquals(OUTPUT_START + "Enter a number to see to whom does it belong:" + EOL 
-				+ "Invalid number! May contain only digits, spaces and '+'. Min length 3, max length 25." + EOL 
-				+ "Enter number:" + EOL
+		assertEquals(OUTPUT_START + FIND_CONTACT_START + EOL 
+				+ FIND_CONTACT_ERROR + EOL 
+				+ FIND_CONTACT_PROMPT + EOL
 				+ "Marin" + EOL 
 				+ "0887174411" + EOL
 			    + OUTPUT_END + EOL
-				+ "> 'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
 
 	@Test
@@ -161,7 +174,7 @@ public class PhoneBookTest {
 		PhoneBook.main(VALID_PHONEBOOK);
 		assertEquals(OUTPUT_START 
 				+ "Invalid command!" + EOL + EOL
-				+ "> 'Phone Book 0.2' terminated." + EOL, bytesOut.toString());
+				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
 
 }

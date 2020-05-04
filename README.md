@@ -46,6 +46,12 @@ Import the project
 
 File --> Open Projects from File System --> Select directory --> Click OK 
 
+### Setting up the project build path
+
+Right click -> Build path -> configure build path -> Source -> Add folder -> add src and tst-> click Apply and Close
+Right click -> Build path -> configure build path -> Libraries -> Add. Libraries -> Junit5 -> click Apply and Close
+
+
 ## Running Project & Unit Tests 
 
 ### Running application 

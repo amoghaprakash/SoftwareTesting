@@ -12,7 +12,7 @@ public class PhoneBook {
 			this.DATA_PATH = filepath;
 	}
 
-    private void saveContacts(Map<String, List<String>> contacts) {
+    public void saveContacts(Map<String, List<String>> contacts) {
         try (PrintWriter writer = new PrintWriter(DATA_PATH)) {
             if (!contacts.isEmpty()) {
                 for (Map.Entry<String, List<String>> entry : contacts.entrySet()) {
@@ -41,7 +41,7 @@ public class PhoneBook {
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.find()) {
                     String[] numbers = matcher.group(2).split(",\\s*");
-                    contacts.put(matcher.group(1), Arrays.asList(numbers));
+                    contacts.put(matcher.group(1), new ArrayList<>(Arrays.asList(numbers)));
                 }
             }
 
@@ -301,7 +301,7 @@ public class PhoneBook {
                     break;
                 case "show":
                 	pb.showContact(contacts, input);
-                    break;
+                	break;
                 case "find":
                 	pb.findContact(contacts, input);
                     break;

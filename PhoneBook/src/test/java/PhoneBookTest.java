@@ -48,11 +48,11 @@ public class PhoneBookTest {
 	private static final String OUTPUT_END = EOL + "Type a command or 'exit' to quit. For a list of valid commands use 'help':" + EOL;
 
 	//PhoneBooks
-	private static final String EMPTY_PHONEBOOK = "tst/contactsEmpty.csv";
-	private static final String VALID_PHONEBOOK = "tst/contacts.csv";
-	private static final String MISSING_PHONEBOOK = "tst/missing.csv";
-	private static final String ADD_NEWCONTACT_PHONEBOOK = "tst/newcontact.csv";
-	private static final String WRONG_CONTACT_PHONEBOOK = "tst1/newcontact.csv";
+	private static final String EMPTY_PHONEBOOK = "resources/contactsEmpty.csv";
+	private static final String VALID_PHONEBOOK = "resources/contactsValid.csv";
+	private static final String MISSING_PHONEBOOK = "resources/missing.csv";
+	private static final String ADD_NEWCONTACT_PHONEBOOK = "resources/newcontact.csv";
+	private static final String WRONG_CONTACT_PHONEBOOK = "resources1/newcontact.csv";
 
 	//Commands
 	private static final String INVALID_COMMAND = "invalid";
@@ -64,7 +64,6 @@ public class PhoneBookTest {
 	private static final String DELETE_COMMAND = "delete";
 	private static final String EDIT_COMMAND = "edit";
 	private static final String HELP_COMMAND = "help";
-	private static final String SAVE_COMMAND = "saveContacts";
 	
 	//String Constants
 	private static final String SHOW_CONTACT_START = "Enter the name you are looking for:";
@@ -75,7 +74,7 @@ public class PhoneBookTest {
 	private static final String ADD_CONTACT_START = "You are about to add a new contact to the phone book.";
 	private static final String ADD_CONTACT_NAME = "Enter contact name:";
 	private static final String ADD_CONTACT_NUMBER = "Enter contact number:";
-	private static final String ADD_CONTACT_ERROR = "Name must be in range 2 - 50 symbols.";
+	//private static final String ADD_CONTACT_ERROR = "Name must be in range 2 - 50 symbols.";
 	private static final String APP_TERMINATE = "'Phone Book 0.2' terminated.";
 	private static final String LOAD_CONTACT_ERROR = "Could not load contacts, phone book is empty!";
 	private static final String LIST_CONTACT_ERROR = "No records found, the phone book is empty!";
@@ -274,6 +273,7 @@ public class PhoneBookTest {
 				+ OUTPUT_END + EOL
 				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
+	
 	@Test
 	public void testAddContact_ExistingContactNameAddedNewNumber_DisplaySuccess() {
 		bytesIn = new ByteArrayInputStream((ADD_COMMAND + EOL + "NewName" + EOL + "0123256789" + EOL + EXIT_COMMAND).getBytes());
@@ -301,6 +301,7 @@ public class PhoneBookTest {
 				+ OUTPUT_END + EOL
 				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
+	
 	@Test
 	public void testDeleteContact_InValidContactName_DisplayError() {
 		bytesIn = new ByteArrayInputStream((DELETE_COMMAND + EOL + "invalidtestingName" + EOL + "Y" + EOL +  EXIT_COMMAND).getBytes());
@@ -313,6 +314,7 @@ public class PhoneBookTest {
 				+ "> Invalid command!" + EOL + EOL
 				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
+	
 	@Test
 	public void testDeleteContact_ValidContactNameDeleteNo_DisplaySuccess() {
 		bytesIn = new ByteArrayInputStream((DELETE_COMMAND + EOL + "testingName" + EOL + "N" + EOL +  EXIT_COMMAND).getBytes());
@@ -324,6 +326,7 @@ public class PhoneBookTest {
 				+ OUTPUT_END + EOL
 				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
+	
 	@Test
 	public void testDeleteContact_ValidContactNameDeleteNotYesNotNo_DisplaySuccess() {
 		bytesIn = new ByteArrayInputStream((DELETE_COMMAND + EOL + "testingName" + EOL + "A" + EOL + "Y" + EOL + EXIT_COMMAND).getBytes());
@@ -337,6 +340,7 @@ public class PhoneBookTest {
 				+ OUTPUT_END + EOL
 				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
+	
 	/*-------------------------------------EDIT START---------------------------------------*/
 	@Test
 	public void testEditContact_InValidContactName_DisplayError() {
@@ -453,6 +457,7 @@ public class PhoneBookTest {
 				+ OUTPUT_END + EOL
 				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
+	
 	@Test
 	public void testHelp_ValidHelpCommands_DisplayCommands() {
 		bytesIn = new ByteArrayInputStream((HELP_COMMAND + EOL + EXIT_COMMAND).getBytes());
@@ -462,6 +467,7 @@ public class PhoneBookTest {
 				+ OUTPUT_HELP + EOL
 				+ "> " + APP_TERMINATE + EOL, bytesOut.toString());
 	}
+	
 	@Test
 	public void testEmptyArguments_EmptyArguments_Exit() {
 		bytesIn = new ByteArrayInputStream((EXIT_COMMAND).getBytes());
@@ -470,15 +476,13 @@ public class PhoneBookTest {
 		assertEquals(OUTPUT_START 
 				+ APP_TERMINATE + EOL, bytesOut.toString());
 	}
+	
 	@Test
 	public void testSave_WrongPhonebookPath_ThrowsException() {
 		PhoneBook pb = new PhoneBook(WRONG_CONTACT_PHONEBOOK);
 		Map<String, List<String>> contacts = new HashMap<String, List<String>>();
 		pb.saveContacts(contacts);
-		//bytesIn = new ByteArrayInputStream((pb.saveContacts(contacts).getBytes());
-		//System.setIn(bytesIn);
-		//PhoneBook.main();
-		assertEquals("tst1/newcontact.csv (No such file or directory)" + EOL
+		assertEquals("null" + EOL
 				, bytesErr.toString()); 
 	}
 

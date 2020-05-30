@@ -1,11 +1,18 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PhoneBook {
 	
-	private String DATA_PATH = "src/contacts.csv";
+	private String DATA_PATH = "resources/contacts.csv";
 	
 	public PhoneBook(String filepath) {
 		if(!filepath.isEmpty())
@@ -13,7 +20,7 @@ public class PhoneBook {
 	}
 
     public void saveContacts(Map<String, List<String>> contacts) {
-        try (PrintWriter writer = new PrintWriter(DATA_PATH)) {
+        try (PrintWriter writer = new PrintWriter(getClass().getResource(DATA_PATH).getPath())) {
             if (!contacts.isEmpty()) {
                 for (Map.Entry<String, List<String>> entry : contacts.entrySet()) {
                     String line = String.format("%s,\"%s\"",
@@ -22,13 +29,13 @@ public class PhoneBook {
                 }
             }
 
-        } catch (IOException ioex) {
+        } catch (Exception ioex) {
             System.err.println(ioex.getMessage());
         }
     }
 
     private void loadContacts(Map<String, List<String>> contacts) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(DATA_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(DATA_PATH)))) {
 
             Pattern pattern = Pattern.compile("^([^,\"]{2,50}),\"([0-9+, ]+)\"$");
 
@@ -45,7 +52,7 @@ public class PhoneBook {
                 }
             }
 
-        } catch (IOException ioex) {
+        } catch (Exception ioex) {
             System.err.println("Could not load contacts, phone book is empty!");
         }
     }

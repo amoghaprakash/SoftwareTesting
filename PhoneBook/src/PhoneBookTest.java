@@ -48,11 +48,11 @@ public class PhoneBookTest {
 	private static final String OUTPUT_END = EOL + "Type a command or 'exit' to quit. For a list of valid commands use 'help':" + EOL;
 
 	//PhoneBooks
-	private static final String EMPTY_PHONEBOOK = "resources/contactsEmpty.csv";
-	private static final String VALID_PHONEBOOK = "resources/contactsValid.csv";
-	private static final String MISSING_PHONEBOOK = "resources/missing.csv";
-	private static final String ADD_NEWCONTACT_PHONEBOOK = "resources/newcontact.csv";
-	private static final String WRONG_CONTACT_PHONEBOOK = "resources1/newcontact.csv";
+	private static final String EMPTY_PHONEBOOK = "./contactsEmpty.csv";
+	private static final String VALID_PHONEBOOK = "./contactsValid.csv";
+	private static final String MISSING_PHONEBOOK = "./missing.csv";
+	private static final String ADD_NEWCONTACT_PHONEBOOK = "./newcontact.csv";
+	private static final String WRONG_CONTACT_PHONEBOOK = "./resources1/newcontact.csv";
 
 	//Commands
 	private static final String INVALID_COMMAND = "invalid";
@@ -482,6 +482,7 @@ public class PhoneBookTest {
 		PhoneBook pb = new PhoneBook(WRONG_CONTACT_PHONEBOOK);
 		Map<String, List<String>> contacts = new HashMap<String, List<String>>();
 		pb.saveContacts(contacts);
+		//assertEquals("./resources1/newcontact.csv (No such file or directory)" + EOL
 		assertEquals("null" + EOL
 				, bytesErr.toString()); 
 	}

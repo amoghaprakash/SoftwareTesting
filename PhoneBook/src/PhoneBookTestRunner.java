@@ -10,8 +10,8 @@ public class PhoneBookTestRunner {
 			System.out.println(failure.toString());
 			failure.getException().printStackTrace();
 		}
-		System.out.println("Tests Run: " + res.getRunCount() + "/28");
-		System.out.println("Tests Failure count: " + res.getFailureCount() + "/28");
+		System.out.println("Tests Run count: " + res.getRunCount());
+		System.out.println("Tests Failure count: " + res.getFailureCount());
 		System.out.println("Tests Successful? :" + res.wasSuccessful());
 	}
 }

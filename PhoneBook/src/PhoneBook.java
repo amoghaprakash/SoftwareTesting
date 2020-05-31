@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class PhoneBook {
 	
-	private String DATA_PATH = "resources/contacts.csv";
+	private String DATA_PATH = "./contacts.csv";
 	
 	public PhoneBook(String filepath) {
 		if(!filepath.isEmpty())
@@ -20,8 +20,9 @@ public class PhoneBook {
 	}
 
     public void saveContacts(Map<String, List<String>> contacts) {
-        try (PrintWriter writer = new PrintWriter(getClass().getResource(DATA_PATH).getPath())) {
-            if (!contacts.isEmpty()) {
+        //try (PrintWriter writer = new PrintWriter(DATA_PATH)) {
+    	try (PrintWriter writer = new PrintWriter(getClass().getResource(DATA_PATH).getPath())) {
+    		if (!contacts.isEmpty()) {
                 for (Map.Entry<String, List<String>> entry : contacts.entrySet()) {
                     String line = String.format("%s,\"%s\"",
                             entry.getKey(), entry.getValue().toString().replaceAll("\\[|]", ""));
@@ -35,8 +36,8 @@ public class PhoneBook {
     }
 
     private void loadContacts(Map<String, List<String>> contacts) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(DATA_PATH)))) {
-
+        //try (BufferedReader reader = new BufferedReader(new FileReader(DATA_PATH))) {
+    	try (BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(DATA_PATH)))) {
             Pattern pattern = Pattern.compile("^([^,\"]{2,50}),\"([0-9+, ]+)\"$");
 
             while (true) {

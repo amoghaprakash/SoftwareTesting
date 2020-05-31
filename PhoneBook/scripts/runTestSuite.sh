@@ -47,7 +47,8 @@ JUNIT_JAR="libraries/junit_4.12.jar"
 HAMCREST_JAR="libraries/hamcrest.core_1.3.0.jar"
 
 LOG_FILE="runTestSuiteLog.txt"
-
+# Hack required due to memory limitations on CS1
+CS1_HACK="-Xmx512m"  # Limit heap to 512 MB
 # Check number of arguments
 if [ "$#" -lt "$MIN_ARGS" ] || [ "$#" -gt "$MAX_ARGS" ]; then
     echo "ERROR: Invalid number of command-line arguments!"

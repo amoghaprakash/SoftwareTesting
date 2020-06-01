@@ -68,6 +68,7 @@ With the Eclipse IDE opened and the Phonebook project imported, right-click on t
 With the Eclipse IDE opened and the Phonebook project imported, right-click on the top-level Phonebook project directory, select Coverage As, then select JUnit Test. Coverage results will be displayed in the IDE's Coverage window. 
 
 ## Running Shell Scripts
+Reference: https://github.com/mosers1/Java-Battleship/tree/master/scripts
 
 ### Copying Source code and Test files to server (We have used Seattle University CS1)
 

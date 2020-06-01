@@ -76,11 +76,13 @@ scp -r Sourcecode folder path Destination folder path
 ### Building Test Suite
 
 Navigate to destination folder location on server.
+run "chmod +rx buildTestSuite.sh"
 run "./buildTestSuite.sh"
 
 ### Running Regression Test
 
 Navigate to destination folder location on server.
+run "chmod +rx runTestSuite.sh"
 1. Executes the test suite one time
          ./runTestSuite.sh 1
 2. Executes the test suite twice and e-mails results to test@gmail.com.
@@ -92,5 +94,6 @@ Navigate to destination folder location on server.
 ### Running Stress Test
 
 Navigate to destination folder location on server.
+run "chmod +rx stressTestApp.sh"
 Execute "./stressTestApp.sh NumberOfInstances NumberOfIterations"
 

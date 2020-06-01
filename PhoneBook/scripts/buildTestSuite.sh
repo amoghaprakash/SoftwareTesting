@@ -12,9 +12,6 @@
 # tests.
 #
 #   DEPENDENCIES, LIMITATIONS, & DESIGN NOTES:
-#       Dependencies : 
-#           1. JDK 1.8.0_211 must be installed at $JDK_PATH.
-#       Design Notes :
 #           1. All source files are built, then all J-Unit test files are built.
 #           2. Artifacts are placed in the $OUT_DIR directory.
 #       Limitations :
